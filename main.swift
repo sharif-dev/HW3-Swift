@@ -60,3 +60,23 @@ class Trie {
     currentNode.leafNode = true
   }
 }
+
+let trie = Trie()
+
+let input = readLine()?
+    .split {$0 == " "}
+    .map (String.init)
+
+if let words = input {
+    for word in words {
+        trie.insert(word: word)
+    }
+}
+
+print(trie.contains(word: "LOL")) // true
+
+print(trie.contains(word: "HANIF")) // true
+
+print(trie.contains(word: "CSGO")) // true
+
+print(trie.contains(word: "NOOB")) // true
