@@ -23,6 +23,23 @@ class Trie {
         root = TrieNode()
     }
 
+    func contains(word: String) -> Bool {
+        guard !word.isEmpty else { return true }
+        var currentNode = root
+
+        let characters = Array(word.characters)
+        var currentIndex = 0
+        while currentIndex < characters.count, let child = currentNode.children[characters[currentIndex]] {
+            currentIndex += 1
+            currentNode = child
+        }
+
+        if currentNode.leafNode {
+            return true
+        }
+        return false
+    }
+
     func insert(word: String) {
     guard !word.isEmpty else { return }
     var currentNode = root
