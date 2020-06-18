@@ -62,8 +62,10 @@ class Trie {
 }
 
 let trie = Trie()
+var rows = 0
+var columns = 0
 
-let input = readLine()?
+var input = readLine(strippingNewline: true)?
     .split {$0 == " "}
     .map (String.init)
 
@@ -73,10 +75,27 @@ if let words = input {
     }
 }
 
-print(trie.contains(word: "LOL")) // true
+input = readLine()?
+    .split {$0 == " "}
+    .map (String.init)
 
-print(trie.contains(word: "HANIF")) // true
+if let numbers = input {
+    rows = Int(numbers[0])!
+    columns = Int(numbers[1])!
+}
 
-print(trie.contains(word: "CSGO")) // true
 
-print(trie.contains(word: "NOOB")) // true
+var table = [[Character]]()
+for _ in 0...rows-1 {
+    var letters = [Character]()
+    let line = readLine(strippingNewline: true)!
+
+    for char in line {
+        if char != " " {
+            print(char)
+            letters.append(char)
+        }
+    }
+    table.append(letters)
+}
+    
