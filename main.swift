@@ -61,7 +61,8 @@ class Trie {
   }
 }
 
-func findWord(table: [[Character]], i: Int, j: Int ,trieNode: TrieNode, word: inout String){
+func findWord(table: [[Character]], i: Int, j: Int ,trieNode: TrieNode, word: inout String) -> String{
+    guard !trieNode.leafNode else { return word }
     word.append(trieNode.value!)
     let rows = table.count
     let columns = table[0].count
