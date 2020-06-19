@@ -77,7 +77,7 @@ func findWord(table: [[Character]], seen: inout [[Bool]], i: Int, j: Int ,trieNo
                     var seenTemp = seen
                     findWord(table: table,seen: &seenTemp, i: i - 1, j: j - 1, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
                     if wordTemp != "" {
-                        print(wordTemp)
+                        results[wordTemp] += 1
                     }
                 }
             }
@@ -88,7 +88,7 @@ func findWord(table: [[Character]], seen: inout [[Bool]], i: Int, j: Int ,trieNo
                 var seenTemp = seen
                 findWord(table: table,seen: &seenTemp, i: i - 1, j: j, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
                 if wordTemp != "" {
-                        print(wordTemp)
+                    results[wordTemp] += 1
                 }
             }
         }
@@ -99,7 +99,7 @@ func findWord(table: [[Character]], seen: inout [[Bool]], i: Int, j: Int ,trieNo
                     var seenTemp = seen
                     findWord(table: table,seen: &seenTemp, i: i - 1, j: j + 1, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
                     if wordTemp != "" {
-                        print(wordTemp)
+                        results[wordTemp] += 1
                     }
                 }
             }
@@ -112,7 +112,7 @@ func findWord(table: [[Character]], seen: inout [[Bool]], i: Int, j: Int ,trieNo
                 var seenTemp = seen
                 findWord(table: table,seen: &seenTemp, i: i, j: j - 1, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
                 if wordTemp != "" {
-                        print(wordTemp)
+                    results[wordTemp] += 1
                 }
             }
         }
@@ -124,7 +124,7 @@ func findWord(table: [[Character]], seen: inout [[Bool]], i: Int, j: Int ,trieNo
                 var seenTemp = seen
                 findWord(table: table,seen: &seenTemp, i: i, j: j + 1, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
                 if wordTemp != "" {
-                        print(wordTemp)
+                    results[wordTemp] += 1
                 }
             }
         }
@@ -137,7 +137,7 @@ func findWord(table: [[Character]], seen: inout [[Bool]], i: Int, j: Int ,trieNo
                     var seenTemp = seen
                     findWord(table: table,seen: &seenTemp, i: i + 1, j: j - 1, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
                     if wordTemp != "" {
-                        print(wordTemp)
+                        results[wordTemp] += 1
                     }
                 }
             }
@@ -148,7 +148,7 @@ func findWord(table: [[Character]], seen: inout [[Bool]], i: Int, j: Int ,trieNo
                 var seenTemp = seen
                 findWord(table: table,seen: &seenTemp, i: i + 1, j: j, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
                 if wordTemp != "" {
-                    print(wordTemp)
+                    results[wordTemp] += 1
                 }
             }
         }
@@ -159,7 +159,7 @@ func findWord(table: [[Character]], seen: inout [[Bool]], i: Int, j: Int ,trieNo
                     var seenTemp = seen
                     findWord(table: table,seen: &seenTemp, i: i + 1, j: j + 1, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
                     if wordTemp != "" {
-                        print(wordTemp)
+                        results[wordTemp] += 1
                     }
                 }
             }
@@ -172,6 +172,7 @@ func findWord(table: [[Character]], seen: inout [[Bool]], i: Int, j: Int ,trieNo
 let trie = Trie()
 var rows = 0
 var columns = 0
+var results [String: Int] = [:]
 
 var input = readLine(strippingNewline: true)?
     .split {$0 == " "}
@@ -179,6 +180,7 @@ var input = readLine(strippingNewline: true)?
 
 if let words = input {
     for word in words {
+        results[word] = 0
         trie.insert(word: word)
     }
 }
@@ -217,4 +219,4 @@ for i in 0...rows-1 {
             }
         }
     }
-}   
+}
