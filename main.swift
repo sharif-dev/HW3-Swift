@@ -28,9 +28,9 @@ class Trie {
         var currentNode = root
 
         let characters = Array(word.characters)
-        var currentIndex = 0
-        while currentIndex < characters.count, let child = currentNode.children[characters[currentIndex]] {
-            currentIndex += 1
+        var currentNodeIndex = 0
+        while currentNodeIndex < characters.count, let child = currentNode.children[characters[currentNodeIndex]] {
+            currentNodeIndex += 1
             currentNode = child
         }
 
@@ -45,9 +45,9 @@ class Trie {
     var currentNode = root
 
     let characters = Array(word.characters)
-    var currentIndex = 0
-    while currentIndex < characters.count {
-        let character = characters[currentIndex]
+    var currentNodeIndex = 0
+    while currentNodeIndex < characters.count {
+        let character = characters[currentNodeIndex]
 
         if let child = currentNode.children[character] {
             currentNode = child
@@ -55,11 +55,45 @@ class Trie {
             currentNode.add(newChild: character)
             currentNode = currentNode.children[character]!
         }
-        currentIndex += 1
+        currentNodeIndex += 1
     }
     currentNode.leafNode = true
   }
 }
+
+func findWord(table: [[Character]], i: Int, j: Int ,trieNode: TrieNode, word: inout String){
+    word.append(trieNode.value!)
+    let rows = table.count
+    let columns = table[0].count
+    let nodeChildren = trieNode.children
+    var seen = Array(repeating: Array(repeating: false, count: columns), count: rows)
+    seen[i][j] = true
+    if i - 1 >= 0 {
+        if j - 1 >= 0 {
+            //
+        }
+        //
+        if j + 1 < columns {
+            //
+        }
+    }
+    if j - 1 >= 0 {
+        //
+    }
+    if j + 1 < columns {
+        //
+    }
+    if i + 1 < rows {
+        if j - 1 >= 0 {
+            //
+        }
+        //
+        if j + 1 < columns {
+            //
+        } 
+    }
+}
+
 
 let trie = Trie()
 var rows = 0
@@ -92,10 +126,19 @@ for _ in 0...rows-1 {
 
     for char in line {
         if char != " " {
-            print(char)
             letters.append(char)
         }
     }
     table.append(letters)
 }
-    
+
+var word = ""
+for i in 0...rows-1 {
+    for j in 0...columns-1 {
+        for key in trie.root.children.keys {
+            if key == table[i][j] {
+                findWord(table: table, i: i, j: j, trieNode: trie.root.children[key]!, word: &word)               
+            }
+        }
+    }
+}
