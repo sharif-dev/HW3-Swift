@@ -61,36 +61,108 @@ class Trie {
   }
 }
 
-func findWord(table: [[Character]], i: Int, j: Int ,trieNode: TrieNode, word: inout String) -> String{
-    guard !trieNode.leafNode else { return word }
+func findWord(table: [[Character]], seen: inout [[Bool]], i: Int, j: Int ,trieNode: TrieNode, word: inout String) {
     word.append(trieNode.value!)
+    guard !trieNode.leafNode else { 
+        return
+    }
     let rows = table.count
     let columns = table[0].count
-    let nodeChildren = trieNode.children
-    var seen = Array(repeating: Array(repeating: false, count: columns), count: rows)
     seen[i][j] = true
     if i - 1 >= 0 {
         if j - 1 >= 0 {
-            //
+            for childCharacter in trieNode.children.keys {
+                if !seen[i-1][j-1], childCharacter == table[i-1][j-1] {
+                    var wordTemp = word
+                    var seenTemp = seen
+                    findWord(table: table,seen: &seenTemp, i: i - 1, j: j - 1, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
+                    if wordTemp != "" {
+                        print(wordTemp)
+                    }
+                }
+            }
+        }        
+        for childCharacter in trieNode.children.keys {
+            if !seen[i-1][j], childCharacter == table[i-1][j] {
+                var wordTemp = word
+                var seenTemp = seen
+                findWord(table: table,seen: &seenTemp, i: i - 1, j: j, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
+                if wordTemp != "" {
+                        print(wordTemp)
+                }
+            }
         }
-        //
         if j + 1 < columns {
-            //
+            for childCharacter in trieNode.children.keys {
+                if !seen[i-1][j+1], childCharacter == table[i-1][j+1] {
+                    var wordTemp = word
+                    var seenTemp = seen
+                    findWord(table: table,seen: &seenTemp, i: i - 1, j: j + 1, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
+                    if wordTemp != "" {
+                        print(wordTemp)
+                    }
+                }
+            }
         }
     }
     if j - 1 >= 0 {
-        //
+        for childCharacter in trieNode.children.keys {
+            if !seen[i][j-1], childCharacter == table[i][j-1] {
+                var wordTemp = word
+                var seenTemp = seen
+                findWord(table: table,seen: &seenTemp, i: i, j: j - 1, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
+                if wordTemp != "" {
+                        print(wordTemp)
+                }
+            }
+        }
     }
     if j + 1 < columns {
-        //
+        for childCharacter in trieNode.children.keys {
+            if !seen[i][j+1], childCharacter == table[i][j+1] {
+                var wordTemp = word
+                var seenTemp = seen
+                findWord(table: table,seen: &seenTemp, i: i, j: j + 1, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
+                if wordTemp != "" {
+                        print(wordTemp)
+                }
+            }
+        }
     }
     if i + 1 < rows {
         if j - 1 >= 0 {
-            //
+            for childCharacter in trieNode.children.keys {
+                if !seen[i+1][j-1], childCharacter == table[i+1][j-1] {
+                    var wordTemp = word
+                    var seenTemp = seen
+                    findWord(table: table,seen: &seenTemp, i: i + 1, j: j - 1, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
+                    if wordTemp != "" {
+                        print(wordTemp)
+                    }
+                }
+            }
         }
-        //
+        for childCharacter in trieNode.children.keys {
+            if !seen[i+1][j], childCharacter == table[i+1][j] {
+                var wordTemp = word
+                var seenTemp = seen
+                findWord(table: table,seen: &seenTemp, i: i + 1, j: j, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
+                if wordTemp != "" {
+                    print(wordTemp)
+                }
+            }
+        }
         if j + 1 < columns {
-            //
+            for childCharacter in trieNode.children.keys {
+                if !seen[i+1][j+1], childCharacter == table[i+1][j+1] {
+                    var wordTemp = word
+                    var seenTemp = seen
+                    findWord(table: table,seen: &seenTemp, i: i + 1, j: j + 1, trieNode: trieNode.children[childCharacter]!, word: &wordTemp)
+                    if wordTemp != "" {
+                        print(wordTemp)
+                    }
+                }
+            }
         } 
     }
 }
@@ -138,7 +210,9 @@ for i in 0...rows-1 {
     for j in 0...columns-1 {
         for key in trie.root.children.keys {
             if key == table[i][j] {
-                findWord(table: table, i: i, j: j, trieNode: trie.root.children[key]!, word: &word)               
+                word = ""
+                var seen = Array(repeating: Array(repeating: false, count: columns), count: rows)
+                findWord(table: table,seen: &seen, i: i, j: j, trieNode: trie.root.children[key]!, word: &word)
             }
         }
     }
