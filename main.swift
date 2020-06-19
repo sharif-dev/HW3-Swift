@@ -165,6 +165,7 @@ func findWord(table: [[Character]], seen: inout [[Bool]], i: Int, j: Int ,trieNo
             }
         } 
     }
+    word = ""
 }
 
 
@@ -216,4 +217,4 @@ for i in 0...rows-1 {
             }
         }
     }
-}
+}   
